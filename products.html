@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品分类 - 石家庄葵舆电气设备有限公司</title>
+    <!-- 引入Tailwind CSS用于样式 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 自定义配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af', // 主色调-深蓝
+                        secondary: '#3b82f6', // 辅助色-浅蓝
+                        dark: '#1e293b', // 深色文本
+                        light: '#f8fafc', // 浅色背景
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            }
+            .category-item {
+                transition: all 0.2s ease;
+            }
+            .category-item:hover {
+                background-color: #eff6ff;
+            }
+            .category-item.active {
+                background-color: #1e40af;
+                color: white;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-dark bg-gray-50">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto pl-0 pr-4 sm:pl-0 sm:pr-6 lg:pl-2 lg:pr-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-3 ml-2">
+                    <img src="assets/图标 拷贝.png" alt="葵舆电气" class="h-10 w-auto">
+                    <span class="text-xl font-bold text-primary">石家庄葵舆电气设备有限公司</span>
+                </a>
+                
+                <!-- 桌面导航 -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-dark hover:text-primary transition-colors">首页</a>
+                    <a href="products.html" class="text-primary font-medium">产品分类</a>
+                    <a href="index.html#applications" class="text-dark hover:text-primary transition-colors">应用领域</a>
+                    <a href="index.html#about" class="text-dark hover:text-primary transition-colors">关于我们</a>
+                    <a href="javascript:void(0)" id="contactBtn" class="text-dark hover:text-primary transition-colors cursor-pointer">联系我们</a>
+                </nav>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="menuBtn" class="md:hidden text-dark hover:text-primary">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="index.html" class="py-2 text-dark hover:text-primary transition-colors">首页</a>
+                <a href="products.html" class="py-2 text-primary font-medium">产品分类</a>
+                <a href="index.html#applications" class="py-2 text-dark hover:text-primary transition-colors">应用领域</a>
+                <a href="index.html#about" class="py-2 text-dark hover:text-primary transition-colors">关于我们</a>
+                <a href="javascript:void(0)" id="contactBtnMobile" class="py-2 text-dark hover:text-primary transition-colors">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 微信二维码弹窗 -->
+    <div id="wechatModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50">
+        <div class="bg-white rounded-2xl p-6 mx-4 max-w-sm w-full text-center relative">
+            <button id="closeModal" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-times text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold mb-4 text-primary">联系我们</h3>
+            <div class="bg-gray-100 rounded-xl p-4 mb-4">
+                <img src="assets/wechat-qr.png" alt="微信二维码" class="w-48 h-48 mx-auto object-contain" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://example.com/wechat'">
+            </div>
+            <p class="text-gray-600 text-sm">扫描上方二维码添加微信</p>
+            <p class="text-gray-500 text-xs mt-2">或拨打电话：15600688108</p>
+        </div>
+    </div>
+
+    <!-- 页面标题 -->
+    <section class="bg-gradient-to-r from-primary to-secondary text-white py-8 md:py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-2xl md:text-4xl font-bold mb-2">产品分类</h1>
+            <p class="text-sm md:text-base opacity-90">丰富的产品线，满足不同行业、不同场景的连接需求</p>
+        </div>
+    </section>
+
+    <!-- 主内容区域：左侧分类 + 右侧产品 -->
+    <section class="py-8 md:py-12">
+        <div class="container mx-auto px-2 md:px-4">
+            <div class="flex flex-row gap-2 md:gap-8">
+                
+                <!-- 左侧分类导航 -->
+                <div class="w-20 md:w-64 flex-shrink-0">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden sticky top-20 md:top-24">
+                        <div class="bg-primary text-white px-2 py-2 md:px-4 md:py-3 font-semibold text-center text-xs md:text-base">
+                            <i class="fa-solid fa-list mr-1 md:mr-2"></i><span class="hidden md:inline">产品</span>分类
+                        </div>
+                        <div class="p-1 md:p-2 space-y-1">
+                            <div class="category-item active px-1 py-2 md:px-4 md:py-3 rounded-lg cursor-pointer text-center text-xs md:text-base" data-category="all">
+                                <i class="fa-solid fa-border-all md:mr-2"></i><span class="hidden md:inline">全部产品</span><span class="md:hidden">全部</span>
+                            </div>
+                            <div class="category-item px-1 py-2 md:px-4 md:py-3 rounded-lg cursor-pointer text-center text-xs md:text-base" data-category="db">
+                                <i class="fa-solid fa-plug md:mr-2"></i><span class="hidden md:inline">DB接头线束</span><span class="md:hidden">DB</span>
+                            </div>
+                            <div class="category-item px-1 py-2 md:px-4 md:py-3 rounded-lg cursor-pointer text-center text-xs md:text-base" data-category="terminal">
+                                <i class="fa-solid fa-microchip md:mr-2"></i><span class="hidden md:inline">端子线</span><span class="md:hidden">端子</span>
+                            </div>
+                            <div class="category-item px-1 py-2 md:px-4 md:py-3 rounded-lg cursor-pointer text-center text-xs md:text-base" data-category="industrial">
+                                <i class="fa-solid fa-industry md:mr-2"></i><span class="hidden md:inline">工业设备线束</span><span class="md:hidden">工业</span>
+                            </div>
+                            <div class="category-item px-1 py-2 md:px-4 md:py-3 rounded-lg cursor-pointer text-center text-xs md:text-base" data-category="communication">
+                                <i class="fa-solid fa-signal md:mr-2"></i><span class="hidden md:inline">通信线束</span><span class="md:hidden">通信</span>
+                            </div>
+                            <div class="category-item px-1 py-2 md:px-4 md:py-3 rounded-lg cursor-pointer text-center text-xs md:text-base" data-category="consumer">
+                                <i class="fa-solid fa-laptop md:mr-2"></i><span class="hidden md:inline">消费电子线束</span><span class="md:hidden">电子</span>
+                            </div>
+                            <div class="category-item px-1 py-2 md:px-4 md:py-3 rounded-lg cursor-pointer text-center text-xs md:text-base" data-category="energy">
+                                <i class="fa-solid fa-bolt md:mr-2"></i><span class="hidden md:inline">新能源线束</span><span class="md:hidden">能源</span>
+                            </div>
+                            <div class="category-item px-1 py-2 md:px-4 md:py-3 rounded-lg cursor-pointer text-center text-xs md:text-base" data-category="test">
+                                <i class="fa-solid fa-vial md:mr-2"></i><span class="hidden md:inline">测试线束</span><span class="md:hidden">测试</span>
+                            </div>
+                            <div class="category-item px-1 py-2 md:px-4 md:py-3 rounded-lg cursor-pointer text-center text-xs md:text-base" data-category="custom">
+                                <i class="fa-solid fa-cogs md:mr-2"></i><span class="hidden md:inline">定制线束</span><span class="md:hidden">定制</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 右侧产品列表 -->
+                <div class="flex-1 min-w-0">
+                    <div id="productList" class="grid grid-cols-2 gap-2 md:gap-6">
+                        <!-- 产品1 - DB接头线束 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="db">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/1.jpg" alt="DB接头线束" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">DB接头线束</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">单端带DB类接头的散尾线束，用于工业设备信号传输</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品2 - 端子线 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="terminal">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/5557端子线.jpg" alt="5557端子线" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">5557端子线</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">双头带白色胶壳的排线，用于电子设备供电</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品3 - 端子线 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="terminal">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/VH端子线.jpg" alt="VH端子线" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">VH端子线</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">双头带白色胶壳的短款线束，适用于小型电子设备</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品4 - 工业设备线束 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="industrial">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/多芯屏蔽线1.jpg" alt="多芯端子线束" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">多芯端子线束</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">成组的多芯屏蔽线缆，用于自动化设备</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品5 - 测试线束 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="test">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/非常规线、.jpg" alt="DB头转鳄鱼夹测试线束" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">DB头转鳄鱼夹测试线束</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">一端DB型连接器，一端鳄鱼夹，用于设备调试</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品6 - 定制线束 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="custom">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/非常规线1.jpg" alt="公母对接端子线束" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">公母对接端子线束</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">一端公母对接插端子，一端环形冷压端子</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品7 - 通信线束 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="communication">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/网线.jpg" alt="网线连接线束" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">网线连接线束</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">RJ45接口网线束，用于网络设备数据传输</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品8 - 通信线束 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="communication">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/1.jpg" alt="串口通信线束" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">串口通信线束</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">RS232/RS485串口线束，用于工控设备通信</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品9 - 消费电子线束 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="consumer">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/家电内部连接线.jpg" alt="家电内部连接线" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">家电内部连接线</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">用于家电产品内部各模块之间的信号连接</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品10 - 消费电子线束 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="consumer">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/数码产品排线.jpg" alt="数码产品排线" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">数码产品排线</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">FPC柔性排线，适用于手机、平板等数码产品</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品11 - 新能源线束 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="energy">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/新对话 (1).png" alt="电池连接线束" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">电池连接线束</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">锂电池组连接线束，用于新能源汽车、储能设备</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                        
+                        <!-- 产品12 - 新能源线束 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md card-hover" data-category="energy">
+                            <div class="aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
+                                <img src="assets/太阳能光伏线束.jpg" alt="太阳能光伏线束" class="w-full h-full object-cover">
+                            </div>
+                            <div class="p-3 md:p-4">
+                                <h3 class="text-sm md:text-lg font-semibold mb-1 md:mb-2">太阳能光伏线束</h3>
+                                <p class="text-gray-600 text-[10px] md:text-sm mb-2 md:mb-3 line-clamp-2">光伏板连接专用线束，耐高温抗紫外线</p>
+                                <a href="javascript:void(0)" onclick="openWechatModal()" class="text-primary text-xs md:text-sm font-medium hover:underline">了解详情 →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 无产品提示 -->
+                    <div id="noProduct" class="hidden text-center py-16">
+                        <i class="fa-solid fa-box-open text-gray-300 text-6xl mb-4"></i>
+                        <p class="text-gray-500">该分类暂无产品</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 公司信息 -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fa-solid fa-cable text-primary text-2xl"></i>
+                        <span class="text-xl font-bold">石家庄葵舆电气设备有限公司</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        专注于电子线束研发、生产与销售的高新技术企业，为客户提供可靠的连接解决方案
+                    </p>
+                </div>
+                
+                <!-- 快速链接 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">首页</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition-colors">产品分类</a></li>
+                        <li><a href="index.html#applications" class="text-gray-400 hover:text-white transition-colors">应用领域</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white transition-colors">关于我们</a></li>
+                        <li><a href="javascript:void(0)" onclick="openWechatModal()" class="text-gray-400 hover:text-white transition-colors">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 产品分类 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">产品分类</h4>
+                    <ul class="space-y-2">
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition-colors">DB接头线束</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition-colors">端子线</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition-colors">测试线束</a></li>
+                        <li><a href="products.html" class="text-gray-400 hover:text-white transition-colors">定制线束</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 联系方式 -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">联系方式</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-map-marker-alt text-primary mt-1 mr-2"></i>
+                            <span class="text-gray-400">河北省石家庄市</span>
+                        </li>
+                        <li class="flex items-start cursor-pointer hover:opacity-80 transition-opacity" onclick="openWechatModal()">
+                            <i class="fa-solid fa-phone text-primary mt-1 mr-2"></i>
+                            <span class="text-gray-400">15600688108</span>
+                        </li>
+                        <li class="flex items-start cursor-pointer hover:opacity-80 transition-opacity" onclick="openWechatModal()">
+                            <i class="fa-solid fa-envelope text-primary mt-1 mr-2"></i>
+                            <span class="text-gray-400">15600688108@qq.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+                <p>© 2025 石家庄葵舆电气设备有限公司 版权所有 </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 微信二维码弹窗控制
+        const wechatModal = document.getElementById('wechatModal');
+        const contactBtn = document.getElementById('contactBtn');
+        const contactBtnMobile = document.getElementById('contactBtnMobile');
+        const closeModal = document.getElementById('closeModal');
+        
+        function openWechatModal() {
+            wechatModal.classList.remove('hidden');
+            wechatModal.classList.add('flex');
+            mobileMenu.classList.add('hidden');
+        }
+        
+        function closeWechatModal() {
+            wechatModal.classList.add('hidden');
+            wechatModal.classList.remove('flex');
+        }
+        
+        contactBtn.addEventListener('click', openWechatModal);
+        contactBtnMobile.addEventListener('click', openWechatModal);
+        closeModal.addEventListener('click', closeWechatModal);
+        wechatModal.addEventListener('click', (e) => {
+            if (e.target === wechatModal) closeWechatModal();
+        });
+        
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        
+        // 分类筛选功能
+        const categoryItems = document.querySelectorAll('.category-item');
+        const productCards = document.querySelectorAll('.product-card');
+        const noProduct = document.getElementById('noProduct');
+        
+        categoryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // 移除所有active状态
+                categoryItems.forEach(i => i.classList.remove('active'));
+                // 添加当前active状态
+                item.classList.add('active');
+                
+                const category = item.dataset.category;
+                let visibleCount = 0;
+                
+                productCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // 显示/隐藏无产品提示
+                if (visibleCount === 0) {
+                    noProduct.classList.remove('hidden');
+                } else {
+                    noProduct.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
